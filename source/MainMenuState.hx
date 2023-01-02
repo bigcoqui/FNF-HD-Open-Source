@@ -23,7 +23,6 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	
 	var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -39,7 +38,6 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-
 		Config.reload();
 	
 		#if desktop
@@ -135,6 +133,10 @@ class MainMenuState extends MusicBeatState
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
+
+		#if android
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 
 		super.create();
 	}
