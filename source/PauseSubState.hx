@@ -1,6 +1,5 @@
 package;
 
-
 import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -27,7 +26,6 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-	
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -77,6 +75,11 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		#if android
+		addVirtualPad(UP_DOWN, A);
+		addPadCamera();
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -109,7 +112,7 @@ class PauseSubState extends MusicBeatSubstate
 					close();
 					if ((PlayState.SONG.song.toLowerCase() == 'high' || PlayState.SONG.song.toLowerCase() == 'milf') && PlayState.timerStop)
 					PlayState.poleTimer.active = true;
-					
+
 				case "Restart Song":
 					FlxG.resetState();
 				case "Options":
@@ -118,12 +121,6 @@ class PauseSubState extends MusicBeatSubstate
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 			}
-		}
-
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
 		}
 	}
 
@@ -151,12 +148,10 @@ class PauseSubState extends MusicBeatSubstate
 			bullShit++;
 
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
 	}
