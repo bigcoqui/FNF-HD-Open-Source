@@ -9,7 +9,6 @@ using StringTools;
 
 class Portrait extends FlxSprite
 {
-
     private var refx:Float;
     private var refy:Float;
 
@@ -21,7 +20,6 @@ class Portrait extends FlxSprite
     var alphaTween:FlxTween;
 	
     public function new(_x:Float, _y:Float, _character:String){
-
         super(_x, _y);
 
         defineCharacter(_character);
@@ -37,16 +35,13 @@ class Portrait extends FlxSprite
         posTween = FlxTween.tween(this, {x: x}, 0.1);
         alphaTween = FlxTween.tween(this, {alpha: alpha}, 0.1);
         hide();
-
     }
 
     function defineCharacter(_character){
-
         _character = characters.contains(_character) ? _character : "bf";
         frames = Paths.getSparrowAtlas("portrait/" + _character, "dialogue");
 
         switch(_character){
-
             case "noChar":
                 addAnim("default", "noChar instance 1");
             case "bf":
@@ -86,7 +81,7 @@ class Portrait extends FlxSprite
                 addAnim2("shocked", "Symbol 1",[34]);
                 addAnim2("snap", "Symbol 1",[36]);
                 addAnim2("wipe", "Symbol 1",[40]);
-                 //***************////**/**/
+
                 addAnim2("run", "Symbol 1",[28]);
                 addAnim2("run-sad", "Symbol 1",[29]);
                 addAnim2('giddy',"Symbol 1",[18]);
@@ -212,7 +207,6 @@ class Portrait extends FlxSprite
                 addAnim('michael', 'michael.png');
                 animation.play("alvin");
                 resize = 0.4;
-        
             case 'sonic':
                 addAnim('blush', 'sonic blush.png');
                 addAnim('default', 'sonic default.png');
@@ -224,16 +218,13 @@ class Portrait extends FlxSprite
                 addAnim('default', 'super sonic default.png');
                 addAnim('reassure', 'super sonic reassure.png');
                 addAnim('yikes', 'super sonic yikes.png');
-
         }
-
-     
-
     }
-    
+
     function addAnim(anim:String, prefix:String){
         animation.addByPrefix(anim,prefix, 0, false);
-    }    
+    }
+
     function addAnim2(anim:String, prefix:String,indices:Array<Int>){
         animation.addByIndices(anim,prefix,indices,"", 0, false);
     }    
@@ -248,72 +239,54 @@ class Portrait extends FlxSprite
 
         x = refx;
         y = refy - height;
-
     }
 
     public function hide(){
-
         alphaTween.cancel();
         posTween.cancel();
         alpha = 1;
         visible = false;
-
     }
 
     public function effectFadeOut(?time:Float = 1){
-
         alphaTween.cancel();
         alpha = 1;
         alphaTween = FlxTween.tween(this, {alpha: 0}, time);
-
     }
 
     public function effectFadeIn(?time:Float = 1){
-
         alphaTween.cancel();
         alpha = 0;
         alphaTween = FlxTween.tween(this, {alpha: 1}, time);
-
     }
 
     public function effectExitStageLeft(?time:Float = 1){
-
         posTween.cancel();
         posTween = FlxTween.tween(this, {x: 0 - width}, time, {ease: FlxEase.circIn});
-
     }
 
     public function effectExitStageRight(?time:Float = 1){
-
         posTween.cancel();
         posTween = FlxTween.tween(this, {x: FlxG.width}, time, {ease: FlxEase.circIn});
-
     }
 
     public function effectFlipRight(){
-
         x = FlxG.width - refx - width;
         y = refy - height;
-
     }
 
     public function effectFlipDirection(){
-        
         flipX = true;
-
     }
 
     public function effectEnterStageLeft(?time:Float = 1){
-        
         posTween.cancel();
         var finalX = x;
         x = 0 - width;
         posTween = FlxTween.tween(this, {x: finalX}, time, {ease: FlxEase.circOut});
-
     }
 
     public function effectEnterStageRight(?time:Float = 1){
-        
         posTween.cancel();
         var finalX = x;
         x = FlxG.width;
@@ -321,7 +294,6 @@ class Portrait extends FlxSprite
     }
 
     public function effectToRight(?time:Float = 1){
-        
         posTween.cancel();
         var finalX = FlxG.width - refx - width;
         x = refx;
@@ -330,13 +302,10 @@ class Portrait extends FlxSprite
     }
 
     public function effectToLeft(?time:Float = 1){
-        
         posTween.cancel();
         var finalX = refx;
         x = FlxG.width - refx - width;
         y = refy - height;
         posTween = FlxTween.tween(this, {x: finalX}, time, {ease: FlxEase.quintOut});
     }
-
-   
 }
