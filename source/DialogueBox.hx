@@ -294,9 +294,6 @@ class DialogueBox extends FlxSpriteGroup
 		
 		dropText.text = swagDialogue.text;
 
-		
-		
-		
 		if (box.animation.curAnim != null)
 		{
 			if (box.animation.curAnim.name == 'normalOpen' && box.animation.curAnim.finished)
@@ -314,13 +311,19 @@ class DialogueBox extends FlxSpriteGroup
 		}
 
 		if(FlxG.keys.justPressed.SPACE && !isEnding){
-
 			isEnding = true;
 			endDialogue();
-
 		}
 
-		if (FlxG.keys.justPressed.ANY && dialogueStarted == true && canAdvance && !isEnding)
+		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
+
+		#if android
+		for (touch in FlxG.touches.list)
+			if (touch.justPressed)
+				pressedEnter = true;
+		#end
+
+		if (pressedEnter && dialogueStarted == true && canAdvance && !isEnding)
 		{
 			remove(dialogue);
 			canAdvance = false;
@@ -641,7 +644,4 @@ class DialogueBox extends FlxSpriteGroup
 			}
 		
 	}
-
-
-	
 }
