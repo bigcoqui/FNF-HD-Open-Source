@@ -1,6 +1,5 @@
 package;
 
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
@@ -8,9 +7,9 @@ import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+
 class GallerySubState extends MusicBeatSubstate
 {
-
 var images:Array<String>;
 
 var curSelected:Int = 0;
@@ -21,8 +20,8 @@ var canSelect:Bool = true;
 
 var text:Alphabet;
 public function new(_images:Array<String>){
-
     super();
+
     images = _images;
     trace(images);
     for (v in 0...images.length){
@@ -38,17 +37,18 @@ public function new(_images:Array<String>){
     for (i in 0...images.length){
         var art:FlxSprite = new FlxSprite(4200 * i, 50).loadGraphic(Paths.image("gallery/art/" + images[i]));
         artSprites.add(art);
-    
     }
-        
+
 	camFollow.x = artSprites.members[0].getMidpoint().x;
     camFollow.y = artSprites.members[0].getMidpoint().y;
     changeSelection();
-	
+
+		#if android
+		addVirtualPad(LEFT_RIGHT, B);
+		#end
 }
 
 override function update(elapsed:Float){
-
     FlxG.camera.focusOn(camFollow.getPosition());
     if (controls.BACK){
         FlxG.sound.play(Paths.sound('cancelMenu')); 
@@ -62,24 +62,19 @@ override function update(elapsed:Float){
         camFollow.y += 5;
     if (FlxG.keys.pressed.DOWN)
         camFollow.y -= 5;
-    
-        
 
     super.update(elapsed);
 }
 
-
 function changeSelection(change:Int = 0):Void
 	{
-		
         canSelect = false;
         curSelected += change;
-        
+
 		if (curSelected < 0)
 			curSelected = images.length - 1;
 		if (curSelected >= images.length)
 			curSelected = 0;
-
         switch (images[curSelected]){
             case 'bf':
             tweencol(79,88,151);
@@ -100,7 +95,6 @@ function changeSelection(change:Int = 0):Void
             case 'mom': 
             tweencol(194,85,163);
         }
-            
 
         FlxTween.tween(camFollow, {x : artSprites.members[curSelected].getMidpoint().x, y:artSprites.members[curSelected].getMidpoint().y},0.8, {ease: FlxEase.smoothStepOut, onComplete: function(twn:FlxTween){canSelect = true;}});
     }
@@ -109,9 +103,4 @@ function changeSelection(change:Int = 0):Void
 
     FlxTween.color(colorBG,1.0,colorBG.color,FlxColor.fromRGB(color1,color2,color3));
     }
-
-
-
-
-
 }
