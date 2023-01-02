@@ -33,11 +33,9 @@ class GameOverSubstate extends MusicBeatSubstate
 	public var snd = "";
 	public function new(x:Float, y:Float)
 	{
-		
-		
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
-		
+
 		lmao.setBorderStyle(FlxTextBorderStyle.OUTLINE, 0, 2, 1);
 		snd = Paths.sound('fnf_loss_sfx' + stageSuffix);
 		switch (daStage)
@@ -56,8 +54,6 @@ class GameOverSubstate extends MusicBeatSubstate
 				if (gofuckingdecked){
 					daBf = 'bf-death-street';
 					rev = true;
-					
-				
 				lmao.scrollFactor.set();
 				lmao.screenCenter(FlxAxes.X);
 				new FlxTimer().start(1, function(e:FlxTimer){
@@ -67,7 +63,6 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'sonic-stage':
 				daBf = 'bf-sonic-death';
 				snd = Paths.sound('ded');
-				
 			case 'omochao-stage':
 				daBf = 'bf-sonic-death-2';
 				snd = Paths.sound('ded');
@@ -81,13 +76,12 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		bf = new Boyfriend(x, y, daBf);
 		add(bf);
-		
+
 				new FlxTimer().start(0.3, function(e:FlxTimer){
 					if (gofuckingdecked) FlxTween.tween(bf, {x:2400}, 0.2, {ease:FlxEase.linear});
 				});
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
-
 
 		if (gofuckingdecked)
 			//trace i know this is dumb don't even tell me
@@ -95,18 +89,19 @@ class GameOverSubstate extends MusicBeatSubstate
 				bf.visible = false;
 			});
 
-		
 			FlxG.sound.play(snd);
-		
-		
+
 		Conductor.changeBPM(100);
 
-		// FlxG.camera.followLerp = 1;
-		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
 
 		bf.playAnim('firstDeath',true,rev);
+
+		#if android
+		addVirtualPad(NONE, A_B);
+		addPadCamera();
+		#end
 	}
 
 	override function update(elapsed:Float)
