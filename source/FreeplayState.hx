@@ -190,6 +190,10 @@ class FreeplayState extends MusicBeatState
 			trace(md);
 		 */
 
+		#if android
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
+
 		super.create();
 	}
 
@@ -215,11 +219,8 @@ class FreeplayState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-
-		
-
-		
 		super.update(elapsed);
+
 		for (i in 0...iconArray.length)
 			{
 				iconArray[i].animation.curAnim.curFrame = 0;
@@ -227,8 +228,6 @@ class FreeplayState extends MusicBeatState
 		//if (Config.betterIcons)
 		iconArray[curSelected].animation.curAnim.curFrame = 2;
 		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-	
-	
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
