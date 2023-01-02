@@ -20,7 +20,6 @@ using StringTools;
 
 class ConfigMenu extends MusicBeatState
 {
-
 	public static var startSong:Bool = true;
 
 	var configText:FlxText;
@@ -62,9 +61,7 @@ class ConfigMenu extends MusicBeatState
 		"Toggle Cutscenes. Everywhere option enables them in Freeplay. (Diaper mode turns them off, pussy.)",
 		"Disable the dodge sound effect.",
 		"Change custom key binds."
-		
-									];
-
+	];
 
 	override function create()
 	{	
@@ -82,8 +79,7 @@ class ConfigMenu extends MusicBeatState
 		bg.updateHitbox();
 		bg.screenCenter();
 		add(bg);
-	
-		
+
 		Config.reload();
 		
 		offsetValue = Config.offset;
@@ -109,10 +105,9 @@ class ConfigMenu extends MusicBeatState
 		optionTitle.antialiasing = true;
 		optionTitle.updateHitbox();
 		optionTitle.screenCenter(X);
-			
+
 		add(optionTitle);
-			
-		
+
 		configText = new FlxText(0, 200, 1280, "", 48);
 		configText.scrollFactor.set(0, 0);
 		configText.setFormat(Paths.font("Funkin-Bold.otf"), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -126,6 +121,10 @@ class ConfigMenu extends MusicBeatState
 
 		add(configText);
 		add(descText);
+
+		#if android
+		addVirtualPad(LEFT_FULL, A_B_C);
+		#end
 
 		super.create();
 	}
@@ -335,7 +334,16 @@ class ConfigMenu extends MusicBeatState
 					FlxG.sound.play(Paths.sound("scrollMenu"));
 					changeItem(1);
 				}
-				
+
+		#if android
+		if (virtualPad.buttonC.justPressed) {
+			#if android
+			removeVirtualPad();
+			#end
+			openSubState(new android.AndroidControlsSubState());
+		}
+		#end
+
 				switch(configSelected){
 					case 0: //Offset
 						if (controls.RIGHT_P)
