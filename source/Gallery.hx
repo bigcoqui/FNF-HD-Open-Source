@@ -99,10 +99,11 @@ override function create()
 
 		changeWeek();
 
+		#if android
+		addVirtualPad(LEFT_RIGHT, B);
+		#end
 
 		super.create();
-	
-
 	}
 
 	override public function update(elapsed:Float){
@@ -111,7 +112,7 @@ override function create()
 			changeWeek(1);
 		if (controls.LEFT_P && canSelect)
 			changeWeek(-1);
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (controls.BACK)
 		FlxG.switchState(new MainMenuState());
 		if (controls.ACCEPT && !stopspamming && StoryMenuState.weekUnlocked[curSelected]){
 			trace(StoryMenuState.weekUnlocked[curSelected]);
