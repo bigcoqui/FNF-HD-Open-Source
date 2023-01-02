@@ -44,7 +44,6 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-
 	public static var pubCurBeat = 0;
 
 	private var misses:Int = 0;
@@ -278,20 +277,18 @@ class PlayState extends MusicBeatState
 		Conductor.changeBPM(SONG.bpm);
 	
 			//if(dialogueList.contains(SONG.song.toLowerCase())){
-			if(FileSystem.exists("assets/data/" + SONG.song.toLowerCase() + "/dialogue.txt")){
+			if(HSys.exists("assets/data/" + SONG.song.toLowerCase() + "/dialogue.txt")){
 				dialogue = CoolUtil.coolTextFile("assets/data/" + SONG.song.toLowerCase() + "/dialogue.txt");
 				usesDialogue = true;
 			}
 
 			//if(dialogueEndList.contains(SONG.song.toLowerCase())){
-			if(FileSystem.exists("assets/data/" + SONG.song.toLowerCase() + "/dialogueEnd.txt")){//why use lists when u can just check : P
+			if(HSys.exists("assets/data/" + SONG.song.toLowerCase() + "/dialogueEnd.txt")){//why use lists when u can just check : P
 				dialogueEnd = CoolUtil.coolTextFile("assets/data/" + SONG.song.toLowerCase() + "/dialogueEnd.txt");
 				usesEndDialogue = true;
 			}
-			
-			
-			if(FileSystem.exists("assets/data/" + SONG.song.toLowerCase() + "/dialogueEnd.txt"))
-		
+
+			if(HSys.exists("assets/data/" + SONG.song.toLowerCase() + "/dialogueEnd.txt"))
 
 		#if desktop
 		// Making difficulty text for Discord Rich Presence.
@@ -567,15 +564,9 @@ class PlayState extends MusicBeatState
 		
 			overlay.blend = 'multiply';
 			overlay.scrollFactor.set(0,0);
-			overlay.cameras = [camOverlay]; 
-			
-			
-
-		
-			
-			
-
+			overlay.cameras = [camOverlay];
 		}
+
 		case 'cocoa' |'eggnog':
 		{
 			curStage = 'mall';
@@ -646,15 +637,12 @@ class PlayState extends MusicBeatState
 		
 			overlay.blend = 'multiply';
 			overlay.scrollFactor.set(0,0);
-			overlay.cameras = [camOverlay]; 
-			
-			
-			
-			
+			overlay.cameras = [camOverlay];
 		}
+
 		case 'happy-time':
 			curStage = 'omochao-stage';
-			
+
 			var sky:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('sonicshit/omochaoStage/chaoRaceSky'));
 			sky.scrollFactor.set(0,0);
 			sky.antialiasing = true;
@@ -1331,6 +1319,11 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camDialogue];
 		doof2.cameras = [camDialogue];
+
+		#if android
+		addAndroidControls();
+		androidControls.visible = true;
+		#end
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -2120,7 +2113,6 @@ class PlayState extends MusicBeatState
 
 			}
 		}
-			
 
 		switch(Config.accuracy){
 			case "none":
@@ -2129,7 +2121,7 @@ class PlayState extends MusicBeatState
 				scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "%";
 		}
 
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if (FlxG.keys.justPressed.ENTER #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
