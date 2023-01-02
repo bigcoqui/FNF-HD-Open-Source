@@ -1,4 +1,5 @@
 package animateatlas;
+
 import flixel.util.FlxDestroyUtil;
 import openfl.geom.Rectangle;
 import flixel.math.FlxPoint;
@@ -13,9 +14,8 @@ import animateatlas.displayobject.SpriteMovieClip;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.frames.FlxFrame;
+
 class AtlasFrameMaker extends FlxFramesCollection{
-
-
         //public static var widthoffset:Int = 0;
         //public static var heightoffset:Int = 0;
         //public static var excludeArray:Array<String>;
