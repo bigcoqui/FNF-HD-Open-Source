@@ -122,7 +122,7 @@ class ConfigMenu extends MusicBeatState
 		add(configText);
 		add(descText);
 
-		#if android
+		#if mobile
 		addVirtualPad(LEFT_FULL, A_B_C);
 		#end
 
@@ -335,12 +335,12 @@ class ConfigMenu extends MusicBeatState
 					changeItem(1);
 				}
 
-		#if android
+		#if mobile
 		if (virtualPad.buttonC.justPressed) {
-			#if android
+			#if mobile
 			removeVirtualPad();
 			#end
-			openSubState(new android.AndroidControlsSubState());
+			openSubState(new mobile.MobileControlsState());
 		}
 		#end
 
