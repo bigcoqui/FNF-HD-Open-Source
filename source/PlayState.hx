@@ -1320,9 +1320,9 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camDialogue];
 		doof2.cameras = [camDialogue];
 
-		#if android
-		addAndroidControls();
-		androidControls.visible = true;
+		#if mobile
+		addMobileControls();
+		mobileControls.visible = true;
 		#end
 
 		// if (SONG.song == 'South')
